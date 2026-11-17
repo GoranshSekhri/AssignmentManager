@@ -120,22 +120,45 @@ def search_assignment():
         print("No matching assignment found.")
 
 
-# DAY 6: Filter assignments by status
 def filter_assignments(status):
     found = False
 
     for assignment in assignments:
         if assignment["status"] == status:
-
             print("\nSubject:", assignment["subject"])
             print("Title:", assignment["title"])
             print("Deadline:", assignment["deadline"])
             print("Status:", assignment["status"])
-
             found = True
 
     if not found:
         print("No", status, "assignments found.")
+
+
+def show_statistics():
+
+    total = len(assignments)
+    pending = 0
+    submitted = 0
+
+    for assignment in assignments:
+
+        if assignment["status"] == "Pending":
+            pending += 1
+
+        elif assignment["status"] == "Submitted":
+            submitted += 1
+
+    print("\n===== ASSIGNMENT STATISTICS =====")
+    print("Total Assignments:", total)
+    print("Pending Assignments:", pending)
+    print("Submitted Assignments:", submitted)
+
+    if total > 0:
+        percentage = (submitted / total) * 100
+        print("Completion Percentage:", round(percentage, 2), "%")
+    else:
+        print("Completion Percentage: 0%")
 
 
 while True:
@@ -146,7 +169,8 @@ while True:
     print("4. Delete Assignment")
     print("5. Search Assignment")
     print("6. Filter Assignments by Status")
-    print("7. Exit")
+    print("7. Show Assignment Statistics")
+    print("8. Exit")
 
     choice = input("Enter your choice: ")
 
@@ -173,14 +197,15 @@ while True:
 
         if status_choice == "1":
             filter_assignments("Pending")
-
         elif status_choice == "2":
             filter_assignments("Submitted")
-
         else:
             print("Invalid status choice.")
 
     elif choice == "7":
+        show_statistics()
+
+    elif choice == "8":
         print("Thank you for using Assignment Manager!")
         break
 
