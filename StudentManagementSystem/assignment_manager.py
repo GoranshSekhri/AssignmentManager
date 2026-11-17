@@ -113,7 +113,6 @@ def search_assignment():
             print("Title:", assignment["title"])
             print("Deadline:", assignment["deadline"])
             print("Status:", assignment["status"])
-
             found = True
 
     if not found:
@@ -136,16 +135,13 @@ def filter_assignments(status):
 
 
 def show_statistics():
-
     total = len(assignments)
     pending = 0
     submitted = 0
 
     for assignment in assignments:
-
         if assignment["status"] == "Pending":
             pending += 1
-
         elif assignment["status"] == "Submitted":
             submitted += 1
 
@@ -161,6 +157,51 @@ def show_statistics():
         print("Completion Percentage: 0%")
 
 
+
+def update_assignment():
+    if len(assignments) == 0:
+        print("No assignments available.")
+        return
+
+    view_assignments()
+
+    try:
+        number = int(input("\nEnter assignment number to update: "))
+
+        if 1 <= number <= len(assignments):
+
+            assignment = assignments[number - 1]
+
+            print("\nWhat would you like to update?")
+            print("1. Subject")
+            print("2. Title")
+            print("3. Deadline")
+
+            choice = input("Enter your choice: ")
+
+            if choice == "1":
+                assignment["subject"] = input("Enter new subject: ")
+
+            elif choice == "2":
+                assignment["title"] = input("Enter new title: ")
+
+            elif choice == "3":
+                assignment["deadline"] = input("Enter new deadline: ")
+
+            else:
+                print("Invalid choice.")
+                return
+
+            save_assignments()
+            print("Assignment updated successfully!")
+
+        else:
+            print("Invalid assignment number.")
+
+    except ValueError:
+        print("Please enter a valid number.")
+
+
 while True:
     print("\n===== ASSIGNMENT MANAGER =====")
     print("1. Add Assignment")
@@ -170,7 +211,8 @@ while True:
     print("5. Search Assignment")
     print("6. Filter Assignments by Status")
     print("7. Show Assignment Statistics")
-    print("8. Exit")
+    print("8. Update Assignment")
+    print("9. Exit")
 
     choice = input("Enter your choice: ")
 
@@ -206,6 +248,9 @@ while True:
         show_statistics()
 
     elif choice == "8":
+        update_assignment()
+
+    elif choice == "9":
         print("Thank you for using Assignment Manager!")
         break
 
